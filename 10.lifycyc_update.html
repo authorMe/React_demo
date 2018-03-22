@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="app"></div>
+
+
+        <script src="bower_components/react/react.js"></script>
+        <script src="bower_components/react/JSXTransformer.js"></script>
+        <script type="text/jsx">
+            var MessageBox = React.createClass({
+                getInitiaState:function(){
+                    return {
+                        count:0,
+                    }
+                },
+                componentShouldUpdate:function(nextPro,nextState){
+                    if(nextState.count > 3){ // 可在此阶段对渲染或者更新进行限制
+                        return false;
+                    }
+                    return true;
+                },
+                componentWillUpdate:function(nextPro,nextState){
+                    console.log('componentWillUpdate');
+                },
+                componentDidUpdate:function(nextPro,nextState){
+                    console.log('componentDidUpdate');
+                },
+                killMyself:function(){
+                    React.unmountComponentAtNode(document.getElementById('app'));
+                },
+                doUpDate:function(){
+                    this.setState({
+                        count:this.state.count + 1,
+                    })
+                },
+                render:function(){
+                    return (
+                        <div>
+                            <h1>计数：{this.state.count}</h1>
+                            <button onClick={this.killMyself}>卸载这个程序</button>
+                            <button onClick={this.doUpdata}>手动更新一下组件(包括自组件)</button>
+                            <SubMmessages count={'当前计数量：'+this.state.count} />
+                        </div>
+                    )
+                }
+            });
+
+            var SubMmessage = React.createClass({
+                componentWillReceive:function(nextPro){
+
+                },
+                shouldComponentUpdate:function(nextPro,nextState){
+                    if(nextState.count > 4){
+                        return false;
+                    }
+                    return true;
+                },
+                render:function(){
+                    return (
+                        <div>
+                            <h3>当前计数量：{this.props.count}</h3>
+                        </div>
+                    )
+                }
+            });
+
+            var messageBox = React.render(<MessageBox>,
+                documen.getElementById('app'),
+                function(){
+                    cosnole.log('渲染完成');
+                }
+            )
+
+        </script>
+    </body>
+</html>

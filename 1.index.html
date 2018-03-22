@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="app"></div>
+
+
+        <script src="bower_components/react/react.js"></script>
+        <script src="bower_components/react/JSXTransformer.js"></script>
+        <script type="text/jsx">
+            var MessageBox = React.createClass({
+                render:function(){
+                    return (<h1 onClick={this.alertMe}>你好！</h1>)
+                },
+                alertMe:function(){
+                    alert('点了我');
+                }
+            });
+
+            React.render(<MessageBox>,
+                documen.getElementById('app'),
+                function(){
+                    cosnole.log('渲染完成');
+                }
+            )
+
+        </script>
+    </body>
+</html>

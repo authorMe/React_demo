@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="app"></div>
+
+
+        <script src="bower_components/react/react.js"></script>
+        <script src="bower_components/react/JSXTransformer.js"></script>
+        <script type="text/jsx">
+            var MessageBox = React.createClass({
+                getInitiaState:function(){
+                    return {
+                        count:0,
+                    }
+                },
+                componentWillMount:function(){
+                    var self = this;
+                    this.timer = setInterval(function(){
+                        self.setState({
+                            count: self.state.count + 1 ,
+                        })
+                    }, 1000)
+                },
+                componentDidMount:function(){
+                    console.log(this.getDOMMode());
+                },
+                componentWillUnmount:function(){
+                    alert('卸载');
+                    clearInterval(this.timer);
+                },
+                killMyself:function(){
+                    React.unmountComponentAtNode(document.getElementById('app'));
+                },
+                render:function(){
+                    return (
+                        <div>
+                            <h1>计数：{this.state.count}</h1>
+                            <button onClick={this.killMyself}>卸载这个程序</button>
+                            <SubMmessages>
+                        </div>
+                    )
+                }
+            });
+
+            var SubMmessage = React.createClass({
+                render:function(){
+                    return (
+                        <div>
+                            <h3>写代码，哈哈哈</h3>
+                        </div>
+                    )
+                }
+            });
+
+            var messageBox = React.render(<MessageBox>,
+                documen.getElementById('app'),
+                function(){
+                    cosnole.log('渲染完成');
+                }
+            )
+
+        </script>
+    </body>
+</html>

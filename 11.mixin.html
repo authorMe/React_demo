@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="app"></div>
+
+
+        <script src="bower_components/react/react.js"></script>
+        <script src="bower_components/react/JSXTransformer.js"></script>
+        <script type="text/jsx">
+            var stateRecodeMixin = {
+                componentWillMount:function(){
+                    this.oldStates = [];
+                },
+                componentWillUpdate:function(){
+                    this.oldStates.push(nextState);
+                },
+                previousState:function(){
+                    var index = this.oldStates.length - 1;
+                    return index == -1 ? {} : this.oldStates[index];
+                },
+            };
+            var MessageBox = React.createClass({
+                mixin:[stateRecodeMixin],
+                getInitiaState:function(){
+                    return {
+                        count:0,
+                    }
+                },
+                doUpDate:function(){
+                    this.setState({
+                        count:this.state.count + 1,
+                    });
+                    alert('上一次的计数量是：'+this.previousState().count);
+                },
+                render:function(){
+                    return (
+                        <div>
+                            <h1>计数：{this.state.count}</h1>
+                            <button onClick={this.killMyself}>卸载这个程序</button>
+                            <button onClick={this.doUpdata}>手动更新一下组件(包括自组件)</button>
+                            <SubMmessages count={'当前计数量：'+this.state.count} />
+                        </div>
+                    )
+                }
+            });
+
+            var SubMmessage = React.createClass({
+                mixin:[stateRecodeMixin],
+                getInitiaState:function(){
+                    return {
+                        count:0,
+                    }
+                },
+                componentWillReceive:function(nextPro){
+                    this.setState({
+                        count:this.props.count + 2,
+                    });
+                },
+                shouldComponentUpdate:function(nextPro,nextState){
+                    if(nextState.count > 4){
+                        return false;
+                    }
+                    return true;
+                },
+                render:function(){
+                    return (
+                        <div>
+                            <h3>当前计数量：{this.props.count}</h3>
+                        </div>
+                    )
+                }
+            });
+
+            var messageBox = React.render(<MessageBox>,
+                documen.getElementById('app'),
+                function(){
+                    cosnole.log('渲染完成');
+                }
+            )
+
+        </script>
+    </body>
+</html>

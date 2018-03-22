@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="app"></div>
+
+
+        <script src="bower_components/react/react.js"></script>
+        <script src="bower_components/react/JSXTransformer.js"></script>
+        <script type="text/jsx">
+            var MessageBox = React.createClass({
+                getInitiaState:function(){
+                    return {
+                        isVisible: true,
+                        titleMessage: '你好世界，来自state哦',
+                        subMessages:[
+                            '我是1',
+                            '我是2',
+                            '我是3',
+                        ]
+                    }
+                },
+                render:function(){
+                    return (
+                        <div>
+                            <h1>{this.state.titleMessage}</h1>
+                            <SubMmessages messages={this.state.subMessages}>
+                        </div>
+                    )
+                }
+            });
+
+            var SubMmessage = React.createClass({
+                propTypes:function(){ // 声明参数为必选 
+                    messages:React.Protypes.array.isRequired,
+                },
+                getDefaultProps:function(){ // 验证messages是否为空
+                    return {
+                        messages:['默认的子消息'],
+                    }
+                }
+                render:function(){
+                    var msgs = [];
+                    this.props.messages.forEach(function(msg,index){
+                        msgs.push(
+                            <p>她说：{msg}</p>
+                        )
+                    });
+                    return (
+                        <div>{masgs}</div>
+                    );
+                }
+            });
+
+            var messageBox = React.render(<MessageBox>,
+                documen.getElementById('app'),
+                function(){
+                    cosnole.log('渲染完成');
+                }
+            )
+
+        </script>
+    </body>
+</html>
